@@ -1,4 +1,4 @@
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
@@ -8,6 +8,7 @@ namespace CombatGame
     {
         Texture2D ballTexture;
         Vector2 ballPosition;
+        float ballSpeed;
 
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
@@ -26,6 +27,7 @@ namespace CombatGame
                 _graphics.PreferredBackBufferWidth / 2,
                 _graphics.PreferredBackBufferHeight / 2
             );
+            ballSpeed = 100f;
 
             base.Initialize();
         }
@@ -44,6 +46,19 @@ namespace CombatGame
                 Exit();
 
             // TODO: Add your update logic here
+            var kState = Keyboard.GetState();
+
+            if (kState.IsKeyDown(Keys.Up))
+                ballPosition.Y -= ballSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds;
+
+            if (kState.IsKeyDown(Keys.Down))
+                ballPosition.Y += ballSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds;
+
+            if (kState.IsKeyDown(Keys.Left))
+                ballPosition.X -= ballSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds;
+
+            if (kState.IsKeyDown(Keys.Right))
+                ballPosition.X += ballSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds;
 
             base.Update(gameTime);
         }
