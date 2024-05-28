@@ -1,0 +1,185 @@
+# General Visual Studio and MonoGame Files
+.vscode/
+.vs/
+*.user
+*.suo
+*.cache
+*.pdb
+*.userprefs
+*.csproj.user
+
+# MonoGame specific files
+Content/obj/
+Content/bin/
+Pipeline.obj/
+Pipeline.bin/
+
+# MonoDevelop specific files
+*.pidb
+*.userprefs
+
+# MonoGame cache and temporary files
+PipelineOutput/
+Intermediate/
+
+# Build output directories
+bin/
+obj/
+
+# OS Specific Files
+# Windows
+Thumbs.db
+Thumbs.db:encryptable
+ehthumbs.db
+ehthumbs_vista.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+Icon
+._*
+.DocumentRevisions-V100
+.fseventsd
+.Spotlight-V100
+.TemporaryItems
+.Trashes
+.VolumeIcon.icns
+.AppleDB
+.AppleDesktop
+Network Trash Folder
+Temporary Items
+.apdisk
+
+# Backup Files
+*.bak
+*.old
+*.orig
+*.backup
+
+# Logs and Databases
+*.log
+*.sql
+*.sqlite
+
+# Additional MonoGame Specific Files
+*.mgcb
+*.mgcb.cs
+*.mgcontent
+
+# Compiled Source Code and Package Files
+*.dll
+*.exe
+*.class
+*.jar
+*.pyc
+*.pyo
+*.pyd
+*.class
+*.war
+*.ear
+*.lib
+*.so
+*.a
+*.la
+*.lo
+*.hi
+*.o
+*.obj
+*.gch
+*.pch
+*.mod
+
+# Temporary Files
+*.tmp
+*.temp
+*.swp
+*.swo
+*.swn
+*.swm
+*.swp
+*.dvi
+*.idb
+*.ilk
+*.ipch
+*.log
+*.map
+*.pch
+*.pgd
+*.pgm
+*.pdb
+*.pgs
+*.pid
+*.pidb
+*.plg
+*.prs
+*.pdb
+*.pyc
+*.pyo
+*.rbc
+*.sdf
+*.idx
+*.ild
+*.ilk
+*.lch
+*.lst
+*.lws
+*.mod
+*.o
+*.obj
+*.log
+*.lua
+*.ncb
+*.ncb
+*.ndb
+*.nvm
+*.nvram
+*.ovf
+*.ovpn
+*.pad
+*.pbxuser
+*.pdb
+*.plg
+*.profile
+*.profraw
+*.pydevproject
+*.qlp
+*.rc2
+*.res
+*.scc
+*.session
+*.specs
+*.stackdump
+*.swp
+*.swo
+*.tlog
+*.ucls
+*.uns
+*.usr
+*.vc.db
+*.vc.vdi
+*.vcxitems
+*.vcxproj
+*.vcxproj.filters
+*.vi
+*.vo
+*.vsmdi
+*.wlog
+*.wpd
+*.xex
+*.xml
+*.yaml
+*.yml
+*.zip
+*.zshrc
+
+# IDE Specific Files
+# Rider
+.idea/
+*.sln.iml
+
+# Visual Studio Code
+.vscode/
+.history/
