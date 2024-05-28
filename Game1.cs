@@ -1,4 +1,4 @@
-﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
@@ -7,6 +7,7 @@ namespace CombatGame
     public class Game1 : Game
     {
         Texture2D ballTexture;
+        Vector2 ballPosition;
 
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
@@ -21,6 +22,10 @@ namespace CombatGame
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
+            ballPosition = new Vector2(
+                _graphics.PreferredBackBufferWidth / 2,
+                _graphics.PreferredBackBufferHeight / 2
+            );
 
             base.Initialize();
         }
@@ -49,7 +54,7 @@ namespace CombatGame
 
             // TODO: Add your drawing code here
             _spriteBatch.Begin();
-            _spriteBatch.Draw(ballTexture, new Vector2(0, 0), Color.White);
+            _spriteBatch.Draw(ballTexture, ballPosition, Color.White);
             _spriteBatch.End();
 
             base.Draw(gameTime);
