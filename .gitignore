@@ -183,3 +183,6 @@ Temporary Items
 # Visual Studio Code
 .vscode/
 .history/
+
+# Avoid any copyright issues - Sprites used for educational purposes only
+/Content/*
