@@ -12,6 +12,10 @@ namespace CombatGame
         List<Sprite> sprites;
         Player player;
 
+        Texture2D spritesheetKick;
+        AnimationManager amSailorMoon;
+        AnimationManager amEnemy;
+
         public Game1()
         {
             _graphics = new GraphicsDeviceManager(this);
@@ -34,15 +38,17 @@ namespace CombatGame
             sprites = new();
 
             var enemyTexture = Content.Load<Texture2D>("enemy-arms-crossed");
-            var sailorMoonTexture = Content.Load<Texture2D>("sailor-moon-ready");
+            amEnemy = new(1, 1, new Vector2(16, 40));
+            sprites.Add(new Sprite(enemyTexture, new Vector2(40, 40), amEnemy));
+            sprites.Add(new Sprite(enemyTexture, new Vector2(250, 200), amEnemy));
+            sprites.Add(new Sprite(enemyTexture, new Vector2(500, 100), amEnemy));
 
-            sprites.Add(new Sprite(enemyTexture, new Vector2(40, 40)));
-            sprites.Add(new Sprite(enemyTexture, new Vector2(250, 200)));
-            sprites.Add(new Sprite(enemyTexture, new Vector2(500, 100)));
-
-            player = new Player(sailorMoonTexture, new Vector2(500, 300), sprites);
+            spritesheetKick = Content.Load<Texture2D>("playersheet_sailor-moon-kick");
+            amSailorMoon = new(4, 4, new Vector2(40, 40));
+            player = new Player(spritesheetKick, new Vector2(500, 400), amSailorMoon, sprites);
             sprites.Add(player);
         }
+
         protected override void Update(GameTime gameTime)
         {
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))

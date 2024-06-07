@@ -10,7 +10,7 @@ namespace CombatGame
         private static readonly float SPEED = 5;
         List<Sprite> collisionGroup;
 
-        public Player(Texture2D texture, Vector2 position, List<Sprite> collisionGroup) : base(texture, position)
+        public Player(Texture2D texture, Vector2 position, AnimationManager am, List<Sprite> collisionGroup) : base(texture, position, am)
         {
             this.collisionGroup = collisionGroup;
         }
