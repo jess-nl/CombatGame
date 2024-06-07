@@ -8,11 +8,18 @@ Combat game using C# and MonoGame.
 
     - I followed MonoGame's ["Getting Started"](https://docs.monogame.net/articles/getting_started/) tutorial, from "Introduction" to "Adding Basic Code".
 
-1. Collision
+2. Collision
     > *Collision and bounds*
 
-    - I followed [MonoGame YouTube playlist by Coding with Sphere](https://www.youtube.com/watch?v=it_vSf80sSk&list=PLvN4CrYN-8i4MhiXQMajViJoC5udFfNfA&index=1).
+    - I followed [MonoGame by Coding with Sphere](https://www.youtube.com/watch?v=it_vSf80sSk&list=PLvN4CrYN-8i4MhiXQMajViJoC5udFfNfA&index=1) YouTube playlist: Ep. 0 to Ep. 4
 
+3. Animation
+    > *Animation for sprites*
+
+    - I followed [MonoGame by Coding with Sphere](https://www.youtube.com/watch?v=it_vSf80sSk&list=PLvN4CrYN-8i4MhiXQMajViJoC5udFfNfA&index=1) YouTube playlist: Ep. 5
+
+
+<br>
 ___
 
 **Sprites are not my own. The sprites used locally are from a [SNES](https://www.nintendo.com/en-ca/) specific game and are not included in this public repository due to copyright concerns. The sprites can be viewed in [FantasyAnime](https://fantasyanime.com/). Permission given from [FantasyAnime](https://fantasyanime.com/) to use them for educational purposes only.**

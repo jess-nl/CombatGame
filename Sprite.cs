@@ -7,49 +7,63 @@ namespace CombatGame
     {
         public Texture2D texture;
         public Vector2 position;
+        public AnimationManager am;
 
-        private static readonly float SCALE = 4f;
+        private const int DEFAULT_SIZE = 40;
+        private static readonly float SCALE = 3.5f;
 
         public Rectangle Rect
         {
             get
             {
+                var sizeW = am.numFrames == 1 ? texture.Width : DEFAULT_SIZE;
+                var sizeH = am.numFrames == 1 ? texture.Height : DEFAULT_SIZE;
+
                 return new Rectangle(
                     (int)position.X,
                     (int)position.Y,
-                    (int)texture.Width * (int)SCALE,
-                    (int)texture.Height * (int)SCALE
+                    sizeW * (int)SCALE,
+                    sizeH * (int)SCALE
                     );
             }
         }
 
-        public Sprite(Texture2D texture, Vector2 position)
+        public Sprite(Texture2D texture, Vector2 position, AnimationManager am)
         {
             this.texture = texture;
             this.position = position;
+            this.am = am;
         }
 
         public virtual void Update(GameTime gameTime, GraphicsDeviceManager graphics)
         {
+            am.Update();
             VerifyWindowBounds(graphics);
         }
         public virtual void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(texture, Rect, Color.White);
+            spriteBatch.Draw(
+                texture,
+                Rect,
+                am.GetFrame(),
+                Color.White
+                );
         }
 
         public void VerifyWindowBounds(GraphicsDeviceManager graphics)
         {
-            float spriteWidth = texture.Width * (2 * SCALE);
-            float spriteHeight = texture.Height * (2 * SCALE);
+            // Right boundary
+            if (position.X > graphics.PreferredBackBufferWidth - texture.Width / 2)
+                position.X = graphics.PreferredBackBufferWidth - texture.Width / 2;
+            // Left boundary
+            else if (position.X < 0)
+                position.X = 0;
 
-            if (position.X > graphics.PreferredBackBufferWidth - spriteWidth / 2)
-                position.X = graphics.PreferredBackBufferWidth - spriteWidth / 2;
-            else if (position.X < texture.Width / 2)
-                position.X = texture.Width / 2;
-
+            var spriteHeight = texture.Height * (2 * SCALE);
+            // Bottom boundary
             if (position.Y > graphics.PreferredBackBufferHeight - spriteHeight / 2)
                 position.Y = graphics.PreferredBackBufferHeight - spriteHeight / 2;
+            // Top boundary
             else if (position.Y < texture.Height / 2)
                 position.Y = texture.Height / 2;
         }
