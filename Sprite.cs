@@ -9,15 +9,16 @@ namespace CombatGame
         public Vector2 position;
         public AnimationManager am;
 
-        private const int DEFAULT_SIZE = 40;
+        private const int DEFAULT_WIDTH = 40;
+        private const int DEFAULT_HEIGHT = 50;
         private static readonly float SCALE = 3.5f;
 
         public Rectangle Rect
         {
             get
             {
-                var sizeW = am.numFrames == 1 ? texture.Width : DEFAULT_SIZE;
-                var sizeH = am.numFrames == 1 ? texture.Height : DEFAULT_SIZE;
+                var sizeW = am.numFrames == 1 ? texture.Width : DEFAULT_WIDTH;
+                var sizeH = am.numFrames == 1 ? texture.Height : DEFAULT_HEIGHT;
 
                 return new Rectangle(
                     (int)position.X,
@@ -38,7 +39,7 @@ namespace CombatGame
         public virtual void Update(GameTime gameTime, GraphicsDeviceManager graphics)
         {
             am.Update();
-            VerifyWindowBounds(graphics);
+            // VerifyWindowBounds(graphics); // TODO: Fix window bounds functionality
         }
         public virtual void Draw(SpriteBatch spriteBatch)
         {
