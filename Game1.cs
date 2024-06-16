@@ -43,9 +43,9 @@ namespace CombatGame
             sprites.Add(new Sprite(enemyTexture, new Vector2(250, 200), amEnemy));
             sprites.Add(new Sprite(enemyTexture, new Vector2(500, 100), amEnemy));
 
-            spritesheetKick = Content.Load<Texture2D>("playersheet_sailor-moon-kick");
-            amSailorMoon = new(4, 4, new Vector2(40, 40));
-            player = new Player(spritesheetKick, new Vector2(500, 400), amSailorMoon, sprites);
+            spritesheetKick = Content.Load<Texture2D>("playersheet-sailor-moon");
+            amSailorMoon = new(4, 4, new Vector2(40, 50), 0, 1);
+            player = new Player(spritesheetKick, new Vector2(600, 300), amSailorMoon, sprites);
             sprites.Add(player);
         }
 
