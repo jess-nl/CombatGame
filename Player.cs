@@ -14,7 +14,7 @@ namespace CombatGame
         public Player(Texture2D texture, Vector2 position, AnimationManager am, List<Sprite> collisionGroup) : base(texture, position, am)
         {
             this.collisionGroup = collisionGroup;
-            this.oldState = oldState;
+            this.oldState = Keyboard.GetState();
         }
 
         public override void Update(GameTime gameTime, GraphicsDeviceManager graphics)
@@ -27,36 +27,28 @@ namespace CombatGame
 
             // Spin
             if (kState.IsKeyDown(Keys.B))
-                am.ChangeFrames(8, 12);
+                am.ChangeFrames(8, 12, true);
 
             // Kick
             if (kState.IsKeyDown(Keys.V))
-                am.ChangeFrames(12, 16);
+                am.ChangeFrames(12, 16, true);
 
             // Wand attack
             if (kState.IsKeyDown(Keys.G))
-                am.ChangeFrames(16, 20);
+                am.ChangeFrames(16, 20, true);
 
-            if (kState.IsKeyDown(Keys.Right) && oldState.IsKeyDown(Keys.Right))
-            {
-                am.ChangeFrames(4, 8);
-                changeX += SPEED;
-            }
-
-            // The player just pressed "left"
-            if (kState.IsKeyDown(Keys.Left) && !oldState.IsKeyDown(Keys.Left))
-            {
-            }
-            // The player is holding the "left" key down
-            else if (kState.IsKeyDown(Keys.Left) && oldState.IsKeyDown(Keys.Left))
+            // Walk left
+            if (kState.IsKeyDown(Keys.Left) && oldState.IsKeyDown(Keys.Left))
             {
                 am.ChangeFrames(0, 4);
                 changeX -= SPEED;
             }
-            // The player was holding the "left" key down, but has just let it go
-            else if (!kState.IsKeyDown(Keys.Left) && oldState.IsKeyDown(Keys.Left))
+
+            // Walk right
+            if (kState.IsKeyDown(Keys.Right) && oldState.IsKeyDown(Keys.Right))
             {
-                //am.ChangeFrames(0, 1);
+                am.ChangeFrames(4, 8);
+                changeX += SPEED;
             }
 
             position.X += changeX;

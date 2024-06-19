@@ -18,20 +18,23 @@ namespace CombatGame
         int rowPos;
         int colPos;
 
+        bool resetOnChange;
+
         public AnimationManager(
             int numFrames,
             int numColumns,
             Vector2 size,
             int startFrame = 0,
-            int? endFrame = null
+            int? endFrame = null,
+            bool resetOnChange = true
             )
         {
             this.numFrames = numFrames;
             this.numColumns = numColumns;
             this.size = size;
             this.startFrame = startFrame;
-            // Similarly: this.endFrame = endFrame.HasValue ? endFrame.Value : numFrames - 1;
             this.endFrame = endFrame ?? numFrames - 1;
+            this.resetOnChange = resetOnChange;
 
             counter = 0;
             interval = 18;
@@ -62,16 +65,16 @@ namespace CombatGame
                 rowPos++;
             }
 
-            var firstFrameInRow = rowPos * numColumns;
-            var lastFrameInRow = firstFrameInRow + colPos;
-            if (lastFrameInRow >= endFrame)
+            if (activeFrame >= endFrame)
                 ResetAnimation();
         }
 
-        public void ChangeFrames(int start, int end)
+        public void ChangeFrames(int start, int end, bool resetAnimation = false)
         {
             startFrame = start;
             endFrame = end;
+            if (resetAnimation)
+                ResetAnimation();
         }
 
         private void ResetAnimation()
