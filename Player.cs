@@ -43,16 +43,32 @@ namespace CombatGame
 
         private void HorizontalWalk(KeyboardState kState, float changeX)
         {
-            // Walk left
-            if (kState.IsKeyDown(Keys.Left) && oldState.IsKeyDown(Keys.Left))
+            // Left
+
+            var isNewLeftPress = kState.IsKeyDown(Keys.Left) && !oldState.IsKeyDown(Keys.Left);
+            var isLeftRelease = !kState.IsKeyDown(Keys.Left) && oldState.IsKeyDown(Keys.Left);
+            var isLeftKeyDown = kState.IsKeyDown(Keys.Left) && oldState.IsKeyDown(Keys.Left);
+
+            if (isNewLeftPress || isLeftRelease)
+                am.ChangeFrames(0, 1, true);
+
+            if (isLeftKeyDown)
             {
                 am.ChangeFrames(0, 4);
                 changeX -= SPEED;
                 lastDirection = Direction.Left;
             }
 
-            // Walk right
-            if (kState.IsKeyDown(Keys.Right) && oldState.IsKeyDown(Keys.Right))
+            // Right
+
+            var isNewRightPress = kState.IsKeyDown(Keys.Right) && !oldState.IsKeyDown(Keys.Right);
+            var isRightRelease = !kState.IsKeyDown(Keys.Right) && oldState.IsKeyDown(Keys.Right);
+            var isRightKeyDown = kState.IsKeyDown(Keys.Right) && oldState.IsKeyDown(Keys.Right);
+
+            if (isNewRightPress || isRightRelease)
+                am.ChangeFrames(4, 5, true);
+
+            if (isRightKeyDown)
             {
                 am.ChangeFrames(4, 8);
                 changeX += SPEED;
@@ -60,6 +76,8 @@ namespace CombatGame
             }
 
             position.X += changeX;
+
+            // Collision
 
             foreach (var sprite in collisionGroup)
             {
