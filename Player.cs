@@ -11,6 +11,8 @@ namespace CombatGame
         List<Sprite> collisionGroup;
         private KeyboardState oldState;
 
+        public Direction lastDirection = Direction.Right;
+
         public Player(Texture2D texture, Vector2 position, AnimationManager am, List<Sprite> collisionGroup) : base(texture, position, am)
         {
             this.collisionGroup = collisionGroup;
@@ -24,24 +26,29 @@ namespace CombatGame
             var kState = Keyboard.GetState();
 
             float changeX = 0;
+            float changeY = 0;
 
-            // Spin
-            if (kState.IsKeyDown(Keys.B))
-                am.ChangeFrames(8, 12, true);
+            var isLeftDirection = lastDirection == Direction.Left;
+            var isRightDirection = lastDirection == Direction.Right;
 
-            // Kick
-            if (kState.IsKeyDown(Keys.V))
-                am.ChangeFrames(12, 16, true);
+            HorizontalWalk(kState, changeX);
+            VerticalMove(kState, changeY);
 
-            // Wand attack
-            if (kState.IsKeyDown(Keys.G))
-                am.ChangeFrames(16, 20, true);
+            Kick(kState, isLeftDirection, isRightDirection);
+            Spin(kState, isLeftDirection, isRightDirection);
+            WandAttack(kState, isLeftDirection, isRightDirection);
 
+            oldState = kState;
+        }
+
+        private void HorizontalWalk(KeyboardState kState, float changeX)
+        {
             // Walk left
             if (kState.IsKeyDown(Keys.Left) && oldState.IsKeyDown(Keys.Left))
             {
                 am.ChangeFrames(0, 4);
                 changeX -= SPEED;
+                lastDirection = Direction.Left;
             }
 
             // Walk right
@@ -49,6 +56,7 @@ namespace CombatGame
             {
                 am.ChangeFrames(4, 8);
                 changeX += SPEED;
+                lastDirection = Direction.Right;
             }
 
             position.X += changeX;
@@ -58,8 +66,10 @@ namespace CombatGame
                 if (sprite != this && sprite.Rect.Intersects(Rect))
                     position.X -= changeX;
             }
+        }
 
-            float changeY = 0;
+        private void VerticalMove(KeyboardState kState, float changeY)
+        {
             if (kState.IsKeyDown(Keys.Up))
                 changeY -= SPEED;
             if (kState.IsKeyDown(Keys.Down))
@@ -71,8 +81,39 @@ namespace CombatGame
                 if (sprite != this && sprite.Rect.Intersects(Rect))
                     position.Y -= changeY;
             }
-
-            oldState = kState;
         }
+
+        private void Kick(KeyboardState kState, bool isLeftDirection, bool isRightDirection)
+        {
+            if (isLeftDirection && kState.IsKeyDown(Keys.V))
+                am.ChangeFrames(16, 20, true);
+
+            if (isRightDirection && kState.IsKeyDown(Keys.V))
+                am.ChangeFrames(20, 24, true);
+        }
+
+        private void Spin(KeyboardState kState, bool isLeftDirection, bool isRightDirection)
+        {
+            if (isLeftDirection && kState.IsKeyDown(Keys.B))
+                am.ChangeFrames(8, 12, true);
+
+            if (isRightDirection && kState.IsKeyDown(Keys.B))
+                am.ChangeFrames(12, 16, true);
+        }
+
+        private void WandAttack(KeyboardState kState, bool isLeftDirection, bool isRightDirection)
+        {
+            if (isLeftDirection && kState.IsKeyDown(Keys.G))
+                am.ChangeFrames(24, 28, true);
+
+            if (isRightDirection && kState.IsKeyDown(Keys.G))
+                am.ChangeFrames(28, 32, true);
+        }
+    }
+
+    public enum Direction
+    {
+        Left,
+        Right,
     }
 }
