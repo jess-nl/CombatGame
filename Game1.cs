@@ -1,4 +1,4 @@
-﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System.Collections.Generic;
@@ -12,7 +12,7 @@ namespace CombatGame
         List<Sprite> sprites;
         Player player;
 
-        Texture2D spritesheetKick;
+        Texture2D ssSailorMoon;
         AnimationManager amSailorMoon;
         AnimationManager amEnemy;
 
@@ -43,9 +43,9 @@ namespace CombatGame
             sprites.Add(new Sprite(enemyTexture, new Vector2(250, 200), amEnemy));
             sprites.Add(new Sprite(enemyTexture, new Vector2(500, 100), amEnemy));
 
-            spritesheetKick = Content.Load<Texture2D>("playersheet-sailor-moon");
+            ssSailorMoon = Content.Load<Texture2D>("playersheet-sailor-moon");
             amSailorMoon = new(4, 4, new Vector2(40, 50), 0, 1);
-            player = new Player(spritesheetKick, new Vector2(600, 300), amSailorMoon, sprites);
+            player = new Player(ssSailorMoon, new Vector2(600, 300), amSailorMoon, sprites);
             sprites.Add(player);
         }
 
