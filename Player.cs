@@ -10,13 +10,16 @@ namespace CombatGame
         private static readonly float SPEED = 5;
         List<Sprite> collisionGroup;
         private KeyboardState oldState;
-
         public Direction lastDirection = Direction.Right;
+        public int points = 0;
+        public Attack attack;
+        public bool isIntersectingX = false;
 
         public Player(Texture2D texture, Vector2 position, AnimationManager am, List<Sprite> collisionGroup) : base(texture, position, am)
         {
             this.collisionGroup = collisionGroup;
             this.oldState = Keyboard.GetState();
+            this.attack = new Attack(4, 6, 8);
         }
 
         public override void Update(GameTime gameTime, GraphicsDeviceManager graphics)
@@ -78,11 +81,16 @@ namespace CombatGame
             position.X += changeX;
 
             // Collision
-
+            
+            isIntersectingX = false;
             foreach (var sprite in collisionGroup)
             {
                 if (sprite != this && sprite.Rect.Intersects(Rect))
+                {
                     position.X -= changeX;
+                    isIntersectingX = true;
+                    break;
+                }
             }
         }
 
@@ -103,35 +111,47 @@ namespace CombatGame
 
         private void Kick(KeyboardState kState, bool isLeftDirection, bool isRightDirection)
         {
-            if (isLeftDirection && kState.IsKeyDown(Keys.V))
-                am.ChangeFrames(16, 20, true);
+            if (kState.IsKeyDown(Keys.V) && !oldState.IsKeyDown(Keys.V))
+            {
+                if (isLeftDirection)
+                    am.ChangeFrames(16, 20, true);
 
-            if (isRightDirection && kState.IsKeyDown(Keys.V))
-                am.ChangeFrames(20, 24, true);
+                if (isRightDirection)
+                    am.ChangeFrames(20, 24, true);
+
+                if (isIntersectingX)
+                    points += attack.Kick;
+            }
         }
 
         private void Spin(KeyboardState kState, bool isLeftDirection, bool isRightDirection)
         {
-            if (isLeftDirection && kState.IsKeyDown(Keys.B))
-                am.ChangeFrames(8, 12, true);
+            if (kState.IsKeyDown(Keys.B) && !oldState.IsKeyDown(Keys.B))
+            {
+                if (isLeftDirection)
+                    am.ChangeFrames(8, 12, true);
 
-            if (isRightDirection && kState.IsKeyDown(Keys.B))
-                am.ChangeFrames(12, 16, true);
+                if (isRightDirection)
+                    am.ChangeFrames(12, 16, true);
+
+                if (isIntersectingX)
+                    points += attack.Spin;
+            }
         }
 
         private void WandAttack(KeyboardState kState, bool isLeftDirection, bool isRightDirection)
         {
-            if (isLeftDirection && kState.IsKeyDown(Keys.G))
-                am.ChangeFrames(24, 28, true);
+            if (kState.IsKeyDown(Keys.G) && !oldState.IsKeyDown(Keys.G))
+            {
+                if (isLeftDirection)
+                    am.ChangeFrames(24, 28, true);
 
-            if (isRightDirection && kState.IsKeyDown(Keys.G))
-                am.ChangeFrames(28, 32, true);
+                if (isRightDirection)
+                    am.ChangeFrames(28, 32, true);
+
+                if (isIntersectingX)
+                    points += attack.WandAttack;
+            }
         }
-    }
-
-    public enum Direction
-    {
-        Left,
-        Right,
     }
 }
