@@ -1,4 +1,4 @@
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System.Collections.Generic;
@@ -15,6 +15,7 @@ namespace CombatGame
         Texture2D ssSailorMoon;
         AnimationManager amSailorMoon;
         AnimationManager amEnemy;
+        AnimationManager amHealthBar;
 
         public Game1()
         {
@@ -47,6 +48,10 @@ namespace CombatGame
             amSailorMoon = new(4, 4, new Vector2(40, 50), 0, 1);
             player = new Player(ssSailorMoon, new Vector2(600, 300), amSailorMoon, sprites);
             sprites.Add(player);
+
+            var healthBarTexture = Content.Load<Texture2D>("health-bar");
+            amHealthBar = new(1, 1, new Vector2(40, 8));
+            sprites.Add(new Sprite(healthBarTexture, new Vector2(650, 20), amHealthBar));
         }
 
         protected override void Update(GameTime gameTime)
