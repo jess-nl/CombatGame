@@ -10,13 +10,18 @@ namespace CombatGame
         private static readonly float SPEED = 5;
         List<Sprite> collisionGroup;
         private KeyboardState oldState;
-
         public Direction lastDirection = Direction.Right;
+        public int points = 0;
+        public Attack attack;
+        public bool isIntersectingX = false;
+        public int health;
 
-        public Player(Texture2D texture, Vector2 position, AnimationManager am, List<Sprite> collisionGroup) : base(texture, position, am)
+        public Player(Texture2D texture, Vector2 position, AnimationManager am, List<Sprite> collisionGroup, int health) : base(texture, position, am)
         {
             this.collisionGroup = collisionGroup;
             this.oldState = Keyboard.GetState();
+            this.attack = new Attack(4, 6, 8);
+            this.health = health;
         }
 
         public override void Update(GameTime gameTime, GraphicsDeviceManager graphics)
@@ -45,14 +50,10 @@ namespace CombatGame
         {
             // Left
 
-            var isNewLeftPress = kState.IsKeyDown(Keys.Left) && !oldState.IsKeyDown(Keys.Left);
-            var isLeftRelease = !kState.IsKeyDown(Keys.Left) && oldState.IsKeyDown(Keys.Left);
-            var isLeftKeyDown = kState.IsKeyDown(Keys.Left) && oldState.IsKeyDown(Keys.Left);
-
-            if (isNewLeftPress || isLeftRelease)
+            if (IsNewKeyDown(kState, Keys.Left) || IsKeyReleased(ref kState, Keys.Left))
                 am.ChangeFrames(0, 1, true);
 
-            if (isLeftKeyDown)
+            if (IsKeyHeldDown(ref kState, Keys.Left))
             {
                 am.ChangeFrames(0, 4);
                 changeX -= SPEED;
@@ -61,14 +62,10 @@ namespace CombatGame
 
             // Right
 
-            var isNewRightPress = kState.IsKeyDown(Keys.Right) && !oldState.IsKeyDown(Keys.Right);
-            var isRightRelease = !kState.IsKeyDown(Keys.Right) && oldState.IsKeyDown(Keys.Right);
-            var isRightKeyDown = kState.IsKeyDown(Keys.Right) && oldState.IsKeyDown(Keys.Right);
-
-            if (isNewRightPress || isRightRelease)
+            if (IsNewKeyDown(kState, Keys.Right) || IsKeyReleased(ref kState, Keys.Right))
                 am.ChangeFrames(4, 5, true);
 
-            if (isRightKeyDown)
+            if (IsKeyHeldDown(ref kState, Keys.Right))
             {
                 am.ChangeFrames(4, 8);
                 changeX += SPEED;
@@ -79,10 +76,15 @@ namespace CombatGame
 
             // Collision
 
+            isIntersectingX = false;
             foreach (var sprite in collisionGroup)
             {
                 if (sprite != this && sprite.Rect.Intersects(Rect))
+                {
                     position.X -= changeX;
+                    isIntersectingX = true;
+                    break;
+                }
             }
         }
 
@@ -103,35 +105,62 @@ namespace CombatGame
 
         private void Kick(KeyboardState kState, bool isLeftDirection, bool isRightDirection)
         {
-            if (isLeftDirection && kState.IsKeyDown(Keys.V))
-                am.ChangeFrames(16, 20, true);
+            if (IsNewKeyDown(kState, Keys.V))
+            {
+                if (isLeftDirection)
+                    am.ChangeFrames(16, 20, true);
 
-            if (isRightDirection && kState.IsKeyDown(Keys.V))
-                am.ChangeFrames(20, 24, true);
+                if (isRightDirection)
+                    am.ChangeFrames(20, 24, true);
+
+                if (isIntersectingX)
+                    health -= attack.Kick;
+            }
         }
 
         private void Spin(KeyboardState kState, bool isLeftDirection, bool isRightDirection)
         {
-            if (isLeftDirection && kState.IsKeyDown(Keys.B))
-                am.ChangeFrames(8, 12, true);
+            if (IsNewKeyDown(kState, Keys.B))
+            {
+                if (isLeftDirection)
+                    am.ChangeFrames(8, 12, true);
 
-            if (isRightDirection && kState.IsKeyDown(Keys.B))
-                am.ChangeFrames(12, 16, true);
+                if (isRightDirection)
+                    am.ChangeFrames(12, 16, true);
+
+                if (isIntersectingX)
+                    health -= attack.Spin;
+            }
         }
 
         private void WandAttack(KeyboardState kState, bool isLeftDirection, bool isRightDirection)
         {
-            if (isLeftDirection && kState.IsKeyDown(Keys.G))
-                am.ChangeFrames(24, 28, true);
+            if (IsNewKeyDown(kState, Keys.G))
+            {
+                if (isLeftDirection)
+                    am.ChangeFrames(24, 28, true);
 
-            if (isRightDirection && kState.IsKeyDown(Keys.G))
-                am.ChangeFrames(28, 32, true);
+                if (isRightDirection)
+                    am.ChangeFrames(28, 32, true);
+
+                if (isIntersectingX)
+                    health -= attack.WandAttack;
+            }
         }
-    }
 
-    public enum Direction
-    {
-        Left,
-        Right,
+        private bool IsNewKeyDown(KeyboardState kState, Keys key)
+        {
+            return kState.IsKeyDown(key) && !oldState.IsKeyDown(key);
+        }
+
+        private bool IsKeyReleased(ref KeyboardState kState, Keys key)
+        {
+            return !kState.IsKeyDown(key) && oldState.IsKeyDown(key);
+        }
+
+        private bool IsKeyHeldDown(ref KeyboardState kState, Keys key)
+        {
+            return kState.IsKeyDown(key) && oldState.IsKeyDown(key);
+        }
     }
 }
