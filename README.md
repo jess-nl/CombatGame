@@ -4,19 +4,24 @@ Combat game using C# and MonoGame.
 *What has been implemented thus far:*
 
 1. Movement
-    > *Setup, sprite import, position, speed & movement*
+    > *Setup, sprite import, position, speed, movement*
 
-    - I followed MonoGame's ["Getting Started"](https://docs.monogame.net/articles/getting_started/) tutorial, from "Introduction" to "Adding Basic Code".
+    - Followed MonoGame's ["Getting Started"](https://docs.monogame.net/articles/getting_started/) tutorial, from "Introduction" to "Adding Basic Code".
 
 2. Collision
-    > *Collision and bounds*
+    > *Collision, bounds*
 
-    - I followed [MonoGame by Coding with Sphere](https://www.youtube.com/watch?v=it_vSf80sSk&list=PLvN4CrYN-8i4MhiXQMajViJoC5udFfNfA&index=1) YouTube playlist: Ep. 0 to Ep. 4
+    - Followed ["MonoGame" by Coding with Sphere](https://www.youtube.com/watch?v=it_vSf80sSk&list=PLvN4CrYN-8i4MhiXQMajViJoC5udFfNfA&index=1) YouTube playlist: Ep. 0 to Ep. 4
 
 3. Animation
-    > *Animation for sprites*
+    > *Sprite animation*
 
-    - I followed [MonoGame by Coding with Sphere](https://www.youtube.com/watch?v=it_vSf80sSk&list=PLvN4CrYN-8i4MhiXQMajViJoC5udFfNfA&index=1) YouTube playlist: Ep. 5
+    - Followed ["MonoGame" by Coding with Sphere](https://www.youtube.com/watch?v=it_vSf80sSk&list=PLvN4CrYN-8i4MhiXQMajViJoC5udFfNfA&index=1) YouTube playlist: Ep. 5
+
+4. Hitpoint
+    > *Health bar drain animation, hitpoint*
+    
+    - Followed ["XNA Tutorial 30 - Health Bar" by Oyyou](https://www.youtube.com/watch?v=-U0d41UPjRk) YouTube tutorial
 
 
 <br>

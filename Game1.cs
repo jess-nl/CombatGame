@@ -1,4 +1,4 @@
-﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System.Collections.Generic;
@@ -15,7 +15,10 @@ namespace CombatGame
         Texture2D ssSailorMoon;
         AnimationManager amSailorMoon;
         AnimationManager amEnemy;
+
+        Texture2D healthBarTexture;
         AnimationManager amHealthBar;
+        Rectangle recHealthBar;
 
         public Game1()
         {
@@ -46,12 +49,12 @@ namespace CombatGame
 
             ssSailorMoon = Content.Load<Texture2D>("playersheet-sailor-moon");
             amSailorMoon = new(4, 4, new Vector2(40, 50), 0, 1);
-            player = new Player(ssSailorMoon, new Vector2(600, 300), amSailorMoon, sprites);
+            player = new Player(ssSailorMoon, new Vector2(600, 300), amSailorMoon, sprites, 100);
             sprites.Add(player);
 
-            var healthBarTexture = Content.Load<Texture2D>("health-bar");
-            amHealthBar = new(1, 1, new Vector2(40, 8));
-            sprites.Add(new Sprite(healthBarTexture, new Vector2(650, 20), amHealthBar));
+            healthBarTexture = Content.Load<Texture2D>("health-bar");
+            amHealthBar = new(1, 1, new Vector2(8, 8));
+            recHealthBar = new Rectangle(650, 30, player.health, 8);
         }
 
         protected override void Update(GameTime gameTime)
@@ -63,6 +66,8 @@ namespace CombatGame
             {
                 sprite.Update(gameTime, _graphics);
             }
+
+            recHealthBar.Width = player.health;
 
             base.Update(gameTime);
         }
@@ -77,6 +82,7 @@ namespace CombatGame
             {
                 sprite.Draw(_spriteBatch);
             }
+            _spriteBatch.Draw(healthBarTexture, recHealthBar, Color.White);
             _spriteBatch.End();
 
             base.Draw(gameTime);
