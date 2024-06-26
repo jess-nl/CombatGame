@@ -113,8 +113,7 @@ namespace CombatGame
                 if (isRightDirection)
                     am.ChangeFrames(20, 24, true);
 
-                if (isIntersectingX)
-                    health -= attack.Kick;
+                ReduceOpponentHealth(attack.Kick);
             }
         }
 
@@ -128,8 +127,7 @@ namespace CombatGame
                 if (isRightDirection)
                     am.ChangeFrames(12, 16, true);
 
-                if (isIntersectingX)
-                    health -= attack.Spin;
+                ReduceOpponentHealth(attack.Spin);
             }
         }
 
@@ -143,8 +141,7 @@ namespace CombatGame
                 if (isRightDirection)
                     am.ChangeFrames(28, 32, true);
 
-                if (isIntersectingX)
-                    health -= attack.WandAttack;
+                ReduceOpponentHealth(attack.WandAttack);
             }
         }
 
@@ -161,6 +158,15 @@ namespace CombatGame
         private bool IsKeyHeldDown(ref KeyboardState kState, Keys key)
         {
             return kState.IsKeyDown(key) && oldState.IsKeyDown(key);
+        }
+
+        private void ReduceOpponentHealth(int attack)
+        {
+            foreach (var sprite in collisionGroup)
+            {
+                if (isIntersectingX && sprite is Enemy enemy)
+                    enemy.Health -= attack;
+            }
         }
     }
 }
