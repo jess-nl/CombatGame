@@ -23,6 +23,8 @@ namespace CombatGame
         Texture2D healthHeartTexture;
         AnimationManager amHealthHeart;
 
+        Enemy enemy;
+
         public Game1()
         {
             _graphics = new GraphicsDeviceManager(this);
@@ -46,9 +48,8 @@ namespace CombatGame
 
             var enemyTexture = Content.Load<Texture2D>("enemy-arms-crossed");
             amEnemy = new(1, 1, new Vector2(16, 40));
-            sprites.Add(new Sprite(enemyTexture, new Vector2(40, 40), amEnemy));
-            sprites.Add(new Sprite(enemyTexture, new Vector2(250, 200), amEnemy));
-            sprites.Add(new Sprite(enemyTexture, new Vector2(500, 100), amEnemy));
+            enemy = new Enemy(enemyTexture, new Vector2(40, 40), amEnemy, 100);
+            sprites.Add(enemy);
 
             ssSailorMoon = Content.Load<Texture2D>("playersheet-sailor-moon");
             amSailorMoon = new(4, 4, new Vector2(40, 50), 0, 1);
@@ -57,7 +58,7 @@ namespace CombatGame
 
             healthBarTexture = Content.Load<Texture2D>("health-bar");
             amHealthBar = new(1, 1, new Vector2(8, 8));
-            recHealthBar = new Rectangle(650, 30, player.health, 8);
+            recHealthBar = new Rectangle(650, 30, enemy.Health, 8);
 
             healthHeartTexture = Content.Load<Texture2D>("health-heart");
             amHealthHeart = new(1, 1, new Vector2(9, 8));
@@ -73,7 +74,7 @@ namespace CombatGame
                 sprite.Update(gameTime, _graphics);
             }
 
-            recHealthBar.Width = player.health;
+            recHealthBar.Width = enemy.Health;
 
             base.Update(gameTime);
         }
