@@ -14,12 +14,14 @@ namespace CombatGame
         public int points = 0;
         public Attack attack;
         public bool isIntersectingX = false;
+        public int health;
 
-        public Player(Texture2D texture, Vector2 position, AnimationManager am, List<Sprite> collisionGroup) : base(texture, position, am)
+        public Player(Texture2D texture, Vector2 position, AnimationManager am, List<Sprite> collisionGroup, int health) : base(texture, position, am)
         {
             this.collisionGroup = collisionGroup;
             this.oldState = Keyboard.GetState();
             this.attack = new Attack(4, 6, 8);
+            this.health = health;
         }
 
         public override void Update(GameTime gameTime, GraphicsDeviceManager graphics)
@@ -112,7 +114,7 @@ namespace CombatGame
                     am.ChangeFrames(20, 24, true);
 
                 if (isIntersectingX)
-                    points += attack.Kick;
+                    health -= attack.Kick;
             }
         }
 
@@ -127,7 +129,7 @@ namespace CombatGame
                     am.ChangeFrames(12, 16, true);
 
                 if (isIntersectingX)
-                    points += attack.Spin;
+                    health -= attack.Spin;
             }
         }
 
@@ -142,7 +144,7 @@ namespace CombatGame
                     am.ChangeFrames(28, 32, true);
 
                 if (isIntersectingX)
-                    points += attack.WandAttack;
+                    health -= attack.WandAttack;
             }
         }
 
