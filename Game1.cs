@@ -1,4 +1,4 @@
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System.Collections.Generic;
@@ -19,6 +19,9 @@ namespace CombatGame
         Texture2D healthBarTexture;
         AnimationManager amHealthBar;
         Rectangle recHealthBar;
+
+        Texture2D healthHeartTexture;
+        AnimationManager amHealthHeart;
 
         public Game1()
         {
@@ -55,6 +58,9 @@ namespace CombatGame
             healthBarTexture = Content.Load<Texture2D>("health-bar");
             amHealthBar = new(1, 1, new Vector2(8, 8));
             recHealthBar = new Rectangle(650, 30, player.health, 8);
+
+            healthHeartTexture = Content.Load<Texture2D>("health-heart");
+            amHealthHeart = new(1, 1, new Vector2(9, 8));
         }
 
         protected override void Update(GameTime gameTime)
@@ -83,6 +89,7 @@ namespace CombatGame
                 sprite.Draw(_spriteBatch);
             }
             _spriteBatch.Draw(healthBarTexture, recHealthBar, Color.White);
+            _spriteBatch.Draw(healthHeartTexture, new Rectangle(635, 23, 27, 24), Color.White);
             _spriteBatch.End();
 
             base.Draw(gameTime);
