@@ -16,7 +16,8 @@ namespace CombatGame
         public bool isIntersectingX = false;
         public int health;
 
-        public Player(Texture2D texture, Vector2 position, AnimationManager am, List<Sprite> collisionGroup, int health) : base(texture, position, am)
+        public Player(Texture2D texture, Vector2 position, AnimationManager am, List<Sprite> collisionGroup, int health)
+            : base(texture, position, am)
         {
             this.collisionGroup = collisionGroup;
             this.oldState = Keyboard.GetState();
@@ -79,7 +80,7 @@ namespace CombatGame
             isIntersectingX = false;
             foreach (var sprite in collisionGroup)
             {
-                if (sprite != this && sprite.Rect.Intersects(Rect))
+                if (sprite != this && sprite.Hitbox.Intersects(this.Hitbox))
                 {
                     position.X -= changeX;
                     isIntersectingX = true;
@@ -98,7 +99,7 @@ namespace CombatGame
 
             foreach (var sprite in collisionGroup)
             {
-                if (sprite != this && sprite.Rect.Intersects(Rect))
+                if (sprite != this && sprite.Hitbox.Intersects(this.Hitbox))
                     position.Y -= changeY;
             }
         }

@@ -15,18 +15,12 @@ namespace CombatGame
 
         public Rectangle Rect
         {
-            get
-            {
-                var sizeW = am.numFrames == 1 ? texture.Width : DEFAULT_WIDTH;
-                var sizeH = am.numFrames == 1 ? texture.Height : DEFAULT_HEIGHT;
+            get { return CreateRectangle(position); }
+        }
 
-                return new Rectangle(
-                    (int)position.X,
-                    (int)position.Y,
-                    sizeW * (int)SCALE,
-                    sizeH * (int)SCALE
-                    );
-            }
+        public virtual Rectangle Hitbox
+        {
+            get { return CreateRectangle(position, 8, 5); }
         }
 
         public Sprite(Texture2D texture, Vector2 position, AnimationManager am)
@@ -41,6 +35,7 @@ namespace CombatGame
             am.Update();
             // VerifyWindowBounds(graphics); // TODO: Fix window bounds functionality
         }
+
         public virtual void Draw(SpriteBatch spriteBatch)
         {
             spriteBatch.Draw(
@@ -49,6 +44,22 @@ namespace CombatGame
                 am.GetFrame(),
                 Color.White
                 );
+        }
+
+        private Rectangle CreateRectangle(Vector2 position, int paddingX = 0, int paddingY = 0)
+        {
+            var spriteW = am.numFrames == 1 ? texture.Width : DEFAULT_WIDTH;
+            var spriteH = am.numFrames == 1 ? texture.Height : DEFAULT_HEIGHT;
+
+            var hitboxW = spriteW - (2 * paddingX);
+            var hitboxH = spriteH - (2 * paddingY);
+
+            return new Rectangle(
+                (int)position.X + paddingX * (int)SCALE,
+                (int)position.Y + paddingY * (int)SCALE,
+                hitboxW * (int)SCALE,
+                hitboxH * (int)SCALE
+            );
         }
 
         public void VerifyWindowBounds(GraphicsDeviceManager graphics)

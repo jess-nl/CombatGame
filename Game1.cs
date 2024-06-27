@@ -48,7 +48,7 @@ namespace CombatGame
 
             var enemyTexture = Content.Load<Texture2D>("enemy-arms-crossed");
             amEnemy = new(1, 1, new Vector2(16, 40));
-            enemy = new Enemy(enemyTexture, new Vector2(40, 40), amEnemy, 100);
+            enemy = new Enemy(enemyTexture, new Vector2(70, 300), amEnemy, 100);
             sprites.Add(enemy);
 
             ssSailorMoon = Content.Load<Texture2D>("playersheet-sailor-moon");
