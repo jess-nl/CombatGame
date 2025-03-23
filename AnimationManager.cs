@@ -20,6 +20,8 @@ namespace CombatGame
 
         bool resetOnChange;
 
+        private bool isPlaying = false;
+
         public AnimationManager(
             int numFrames,
             int numColumns,
@@ -44,6 +46,8 @@ namespace CombatGame
 
         public void Update()
         {
+            if (!isPlaying) return;
+
             counter++;
             if (counter > interval)
             {
@@ -54,19 +58,22 @@ namespace CombatGame
 
         public void NextFrame()
         {
+            if (!isPlaying)
+                return;
+
             activeFrame++;
             colPos++;
             if (activeFrame >= endFrame)
+            {
+                isPlaying = false;
                 ResetAnimation();
+            }
 
             if (colPos >= numColumns)
             {
                 colPos = 0;
                 rowPos++;
             }
-
-            if (activeFrame >= endFrame)
-                ResetAnimation();
         }
 
         public void ChangeFrames(int start, int end, bool resetAnimation = false)
@@ -75,6 +82,8 @@ namespace CombatGame
             endFrame = end;
             if (resetAnimation)
                 ResetAnimation();
+
+            isPlaying = true;
         }
 
         private void ResetAnimation()
