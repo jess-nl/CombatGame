@@ -15,6 +15,7 @@ namespace CombatGame
         public Attack attack;
         public bool isIntersectingX = false;
         public int health;
+        private static readonly float ATTACK_RANGE = 50f;
 
         public Player(Texture2D texture, Vector2 position, AnimationManager am, List<Sprite> collisionGroup, int health)
             : base(texture, position, am)
@@ -165,8 +166,15 @@ namespace CombatGame
         {
             foreach (var sprite in collisionGroup)
             {
-                if (isIntersectingX && sprite is Enemy enemy)
-                    enemy.Health -= attack;
+                if (sprite is Enemy enemy)
+                {
+                    float distance = Vector2.Distance(this.position, enemy.position);
+
+                    if (distance < ATTACK_RANGE)
+                    {
+                        enemy.Health -= attack;
+                    }
+                }
             }
         }
     }
